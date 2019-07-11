@@ -18,15 +18,14 @@
         <activity
             android:name=".student_question_popup"
             android:theme="@style/AppTheme.CustomThemePreview" />
-        <activity android:name=".StudentActivity">
+        <activity android:name=".StudentActivity"></activity>
+        <activity android:name=".TeacherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TeacherActivity"></activity>
         <activity android:name=".MainActivity" />
         <activity
             android:name=".LoginActivity"
