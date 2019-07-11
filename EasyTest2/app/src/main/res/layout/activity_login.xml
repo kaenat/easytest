@@ -153,8 +153,6 @@
                         android:src="@drawable/ic_next"
                         android:layout_marginEnd="10dp" />
                 </LinearLayout>
-
-
             </LinearLayout>
 
 

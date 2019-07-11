@@ -58,7 +58,6 @@ public class TeacherActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPageAdapter Adapter = new ViewPageAdapter(getSupportFragmentManager());
         Adapter.addFragments(new fragment_questions(), "Questions");
-        Adapter.addFragments(new fragment_answers(), "Answers");
         viewPager.setAdapter(Adapter);
     }
 
