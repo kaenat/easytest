@@ -6,7 +6,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -19,6 +24,8 @@ public class TeacherActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
+    ImageButton logout;
+    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +33,9 @@ public class TeacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_teacher);
 
         tabLayout = findViewById(R.id.tab_layout);
+        logout = findViewById(R.id.logout);
         viewPager = findViewById(R.id.main_tab_content);
+
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
@@ -34,6 +43,17 @@ public class TeacherActivity extends AppCompatActivity {
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mGoogleSignInClient.signOut();
+
+                Intent a= new Intent(TeacherActivity.this,LoginActivity.class);
+                startActivity(a);
+
+            }
+        });
 
         /*test t = new test("1", "2");
         ValueEventListener postListener = new ValueEventListener() {

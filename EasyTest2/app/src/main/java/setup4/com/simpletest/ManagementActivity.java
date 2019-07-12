@@ -3,10 +3,15 @@ package setup4.com.simpletest;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInApi;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +43,7 @@ public class ManagementActivity extends AppCompatActivity {
 
     private int numberOfQuestions = 0;
     private int numberOfAnswers = 0;
+    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +120,18 @@ public class ManagementActivity extends AppCompatActivity {
         }
 
         chart.setPieChartData(data);
+
+
+        ImageButton logout = (ImageButton) findViewById(R.id.logout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mGoogleSignInClient.signOut();
+                Intent a= new Intent(ManagementActivity.this,LoginActivity.class);
+                startActivity(a);
+            }
+        });
     }
 
     private class ValueTouchListener implements PieChartOnValueSelectListener {

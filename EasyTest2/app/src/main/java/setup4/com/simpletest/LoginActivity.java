@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
 
     FirebaseAuth mAuth;
+    ToggleSwitch toggleSwitch;
 
 
     GoogleSignInClient mGoogleSignInClient;
@@ -48,12 +49,13 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(LoginActivity.this);
 
 
-        ToggleSwitch toggleSwitch = (ToggleSwitch) findViewById(R.id.loginAsToggle);
+         toggleSwitch = (ToggleSwitch) findViewById(R.id.loginAsToggle);
         ArrayList<String> labels = new ArrayList<>();
-        labels.add("Admin");
-        labels.add("Manager");
         labels.add("Teacher");
         labels.add("Student");
+        labels.add("Admin");
+        labels.add("Manager");
+
         toggleSwitch.setLabels(labels);
 
         email = (EditText) findViewById(R.id.email);
@@ -114,6 +116,28 @@ public class LoginActivity extends AppCompatActivity {
             // Signed in successfully, show authenticated UI.
 
             Toast.makeText(LoginActivity.this,"Success",Toast.LENGTH_LONG).show();
+
+            if (toggleSwitch.getCheckedTogglePosition()==0){
+
+                Intent i = new Intent(LoginActivity.this, TeacherActivity.class);
+                startActivity(i);
+
+
+            }
+            else if (toggleSwitch.getCheckedTogglePosition()==1){
+
+                Intent i = new Intent(LoginActivity.this, StudentActivity.class);
+                startActivity(i);
+
+
+            }
+            if (toggleSwitch.getCheckedTogglePosition()==3){
+
+                Intent i = new Intent(LoginActivity.this, ManagementActivity.class);
+                startActivity(i);
+
+
+            }
             //updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.

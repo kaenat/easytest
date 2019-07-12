@@ -92,21 +92,21 @@ public class student_question_popup extends AppCompatActivity {
                 type = (String) dataSnapshot.child("type").getValue();
 
                 question.setText(q);
-                if (type.equals("Yes/No")) {
+                if (type.equals("0")) {
                     lv.setVisibility(View.VISIBLE);
 
                     mOptions = new ArrayList<String>();
                     mOptions.add("Yes");
                     mOptions.add("No");
-                } else if (type.equals("MCQs")) {
+                } else if (type.equals("3")) {
                     lv.setVisibility(View.VISIBLE);
 
                     mOptions = new ArrayList<String>();
                     List<String> options = (List<String>) dataSnapshot.child("options").getValue();
                     mOptions.addAll(options);
-                } else if (type.equals("Short") || type.equals("Long")) {
+                } else if (type.equals("1") || type.equals("2")) {
                     editText.setVisibility(View.VISIBLE);
-                } else if (type.equals("Picture")) {
+                } else if (type.equals("4")) {
                     getWindow().setLayout((int) (width * .75), (int) (height * .75));
                     pictureLayout.setVisibility(View.VISIBLE);
                 }

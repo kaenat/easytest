@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,6 +40,9 @@ public class StudentActivity extends AppCompatActivity {
     SampleAdapter sa;
     ArrayList<ListData> mDataList = new ArrayList<ListData>();
     int selectedOption;
+    GoogleSignInClient mGoogleSignInClient;
+
+    ImageButton logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,18 @@ public class StudentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student);
 
         listView = (ListView) findViewById(R.id.listView);
+
+        logout = (ImageButton) findViewById(R.id.logout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mGoogleSignInClient.signOut();
+                Intent a= new Intent(StudentActivity.this,LoginActivity.class);
+                startActivity(a);
+            }
+        });
+
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             selectedOption = i;
 
@@ -69,7 +85,7 @@ public class StudentActivity extends AppCompatActivity {
                 outerD = dataSnapshot.child("Answers");
                 for (DataSnapshot innerD : outerD.getChildren()) {
                     String id = (String) innerD.child("questionID").getValue();
-                    sa.removeOption(id);
+                  //  sa.removeOption(id);
                 }
             }
 
@@ -96,7 +112,7 @@ public class StudentActivity extends AppCompatActivity {
 
         public void removeOption(String id) {
             int i = 0;
-            for (; i < mDataList.size(); i++) {
+            for (; i <= mDataList.size(); i++) {
                 if (mDataList.get(i).ID.equals(id))
                     break;
             }
