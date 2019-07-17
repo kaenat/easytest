@@ -19,6 +19,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     ToggleSwitch toggleSwitch;
 
 
-    GoogleSignInClient mGoogleSignInClient;
+    static GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,19 +62,84 @@ public class LoginActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         LinearLayout next = (LinearLayout) findViewById(R.id.next);
+
+      //  mGoogleSignInClient.signOut();
+
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                /*emailText = email.getText().toString();
+                logout();
+
+               /* emailText = email.getText().toString();
                 passwordText = password.getText().toString();
 
                 Global go = new Global();
                 go.setEmail(emailText);
-                go.setPassword(passwordText);*/
-                mGoogleSignInClient.signOut();
+                go.setPassword(passwordText);
+
+
+                ActionCodeSettings actionCodeSettings =
+                        ActionCodeSettings.newBuilder()
+                                // URL you want to redirect back to. The domain (www.example.com) for this
+                                // URL must be whitelisted in the Firebase Console.
+                                .setUrl("easytest-17c2e.firebaseapp.com ")
+                                // This must be true
+                                .setHandleCodeInApp(true)
+
+                                .setAndroidPackageName(
+                                        "setup4.com.simpletest",
+                                        false, *//* installIfNotAvailable *//*
+                                        "12"    *//* minimumVersion *//*)
+                                .build();
+
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                auth.sendSignInLinkToEmail(emailText, actionCodeSettings)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("result", "Email sent.");
+                                }
+                            }
+                        });
+
+                // FirebaseAuth auth = FirebaseAuth.getInstance();
+                Intent intent = getIntent();
+                String emailLink = intent.getData().toString();
+
+                Global got= new Global();
+
+// Confirm the link is a sign-in with email link.
+                if (auth.isSignInWithEmailLink(emailLink)) {
+                    // Retrieve this from wherever you stored it
+
+
+                    // The client SDK will parse the code from the link for you.
+                    auth.signInWithEmailLink(got.getEmail(), emailLink)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("msg", "Successfully signed in with email link!");
+                                        AuthResult result = task.getResult();
+                                        // You can access the new user via result.getUser()
+                                        // Additional user info profile *not* available via:
+                                        // result.getAdditionalUserInfo().getProfile() == null
+                                        // You can check if the user is new or existing:
+                                        // result.getAdditionalUserInfo().isNewUser()
+                                    } else {
+                                        Log.e("msg", "Error signing in with email link", task.getException());
+                                    }
+                                }
+                            });
+                }*/
+
             }
         });
+
+
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -115,10 +181,9 @@ public class LoginActivity extends AppCompatActivity {
 
             // Signed in successfully, show authenticated UI.
 
-            Toast.makeText(LoginActivity.this,"Success",Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this,""+account.getDisplayName(),Toast.LENGTH_LONG).show();
 
             if (toggleSwitch.getCheckedTogglePosition()==0){
-
                 Intent i = new Intent(LoginActivity.this, TeacherActivity.class);
                 startActivity(i);
 
@@ -147,6 +212,15 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this,"fail",Toast.LENGTH_LONG).show();
 
         }
+    }
+
+    public static void logout(){
+
+        mGoogleSignInClient.signOut();
+
+
+
+
     }
 
 }

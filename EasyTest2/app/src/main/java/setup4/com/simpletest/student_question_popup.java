@@ -162,26 +162,28 @@ public class student_question_popup extends AppCompatActivity {
             startActivityForResult(intent, TAKE_PICTURE);
         }
     }
-
     public void submit(View view) {
-        if (type.equals("Yes/No") || type.equals("MCQs")) {
+        if (type.equals("0") || type.equals("3")) {
             if (selectedOption == -1) {
                 Toast.makeText(this, "Please select an option", Toast.LENGTH_SHORT).show();
             } else {
                 addDatabaseEntry(mOptions.get(selectedOption));
+
             }
-        } else if (type.equals("Short") || type.equals("Long")) {
+        } else if (type.equals("1") || type.equals("2")) {
             String ans = editText.getText().toString();
             if (ans.equals("")) {
                 Toast.makeText(this, "Answer cannot be empty", Toast.LENGTH_SHORT).show();
             } else {
                 addDatabaseEntry(ans);
+
             }
-        } else if (type.equals("Picture")) {
+        } else if (type.equals("4")) {
             if (filePath == null) {
                 Toast.makeText(this, "Answer cannot be empty", Toast.LENGTH_SHORT).show();
             } else {
                 uploadImage();
+
             }
         }
     }

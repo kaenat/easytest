@@ -56,7 +56,7 @@ public class StudentActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mGoogleSignInClient.signOut();
+                LoginActivity.logout();
                 Intent a= new Intent(StudentActivity.this,LoginActivity.class);
                 startActivity(a);
             }

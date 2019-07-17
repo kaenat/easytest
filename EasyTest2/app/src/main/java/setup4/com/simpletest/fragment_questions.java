@@ -132,13 +132,14 @@ public class fragment_questions extends Fragment {
                 int togglePosition = toggleSwitch.getCheckedTogglePosition();
                 String questionStatement = questionLayout.getText().toString();
 
-                if (mDataList.isEmpty()) {
-                    Toast.makeText(getContext(), "No Options", Toast.LENGTH_SHORT).show();
-                }
-
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                 Question question = new Question(togglePosition + "", questionStatement);
                 if (togglePosition == 3) {
+                    if (mDataList.isEmpty()) {
+                        Toast.makeText(getContext(), "No Options", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     question.setOptions(mDataList);
                 }
                 String uniqueID = UUID.randomUUID().toString();
@@ -146,6 +147,8 @@ public class fragment_questions extends Fragment {
 
                 questionLayout.setText("");
                 sa.refresh();
+
+                Toast.makeText(getContext(), "Question Added", Toast.LENGTH_SHORT).show();
             }
         });
     }
