@@ -25,6 +25,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -38,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     ToggleSwitch toggleSwitch;
-
+DatabaseReference mDatabase;
 
     static GoogleSignInClient mGoogleSignInClient;
 
@@ -50,14 +55,14 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(LoginActivity.this);
 
 
-         toggleSwitch = (ToggleSwitch) findViewById(R.id.loginAsToggle);
+         /*toggleSwitch = (ToggleSwitch) findViewById(R.id.loginAsToggle);
         ArrayList<String> labels = new ArrayList<>();
         labels.add("Teacher");
         labels.add("Student");
         labels.add("Admin");
         labels.add("Manager");
 
-        toggleSwitch.setLabels(labels);
+        toggleSwitch.setLabels(labels);*/
 
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
@@ -70,7 +75,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                logout();
+                if (email.getText().toString().equals("admin")&&password.getText().toString().equals("admin")){
+
+                    Intent in= new Intent(LoginActivity.this,AdminRegister.class);
+                    startActivity(in);
+                }
+                else {
+                    Toast.makeText(LoginActivity.this,"Admin email/password incorrect",Toast.LENGTH_LONG).show();
+                }
 
                /* emailText = email.getText().toString();
                 passwordText = password.getText().toString();
@@ -181,28 +193,58 @@ public class LoginActivity extends AppCompatActivity {
 
             // Signed in successfully, show authenticated UI.
 
-            Toast.makeText(LoginActivity.this,""+account.getDisplayName(),Toast.LENGTH_LONG).show();
-
-            if (toggleSwitch.getCheckedTogglePosition()==0){
-                Intent i = new Intent(LoginActivity.this, TeacherActivity.class);
-                startActivity(i);
-
-
-            }
-            else if (toggleSwitch.getCheckedTogglePosition()==1){
-
-                Intent i = new Intent(LoginActivity.this, StudentActivity.class);
-                startActivity(i);
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    DataSnapshot outerD = dataSnapshot.child("Users");
+                    if (outerD.exists()) {
 
 
-            }
-            if (toggleSwitch.getCheckedTogglePosition()==3){
+                    for (DataSnapshot innerD : outerD.getChildren()) {
+                        String ld = innerD.getKey();
+                        String email = (String) innerD.child("UserEmail").getValue();
+                        String role = (String) innerD.child("UserRole").getValue();
 
-                Intent i = new Intent(LoginActivity.this, ManagementActivity.class);
-                startActivity(i);
+
+                        Toast.makeText(LoginActivity.this, "" + account.getDisplayName(), Toast.LENGTH_LONG).show();
 
 
-            }
+                         if (account.getEmail().equals(email)&&role.equals("Student")) {
+
+                            Intent i = new Intent(LoginActivity.this, StudentActivity.class);
+                            startActivity(i);
+                        }
+                        else if (account.getEmail().equals(email)&&role.equals("Teacher")) {
+
+                            Intent i = new Intent(LoginActivity.this, TeacherActivity.class);
+                            startActivity(i);
+                        }
+                        else if (account.getEmail().equals(email)&&role.equals("Management")) {
+
+                            Intent i = new Intent(LoginActivity.this, ManagementActivity.class);
+                            startActivity(i);
+                        }
+                        else{
+                             Toast.makeText(LoginActivity.this,"fail",Toast.LENGTH_LONG).show();
+
+                         }
+
+
+                    }
+
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+
             //updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.

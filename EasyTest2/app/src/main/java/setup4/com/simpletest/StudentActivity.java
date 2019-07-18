@@ -44,6 +44,7 @@ public class StudentActivity extends AppCompatActivity {
 
     ImageButton logout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

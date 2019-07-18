@@ -53,28 +53,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Welcome to "
+                        android:text="Register new User"
                         android:textColor="@android:color/black"
                         android:textSize="22sp" />
 
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Easy Test"
-                        android:textSize="22sp" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/txt2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Login as"
-                    android:textSize="22sp" />
 
-               <!-- <belka.us.androidtoggleswitch.widgets.ToggleSwitch
+
+                <belka.us.androidtoggleswitch.widgets.ToggleSwitch
                     android:id="@+id/loginAsToggle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -88,7 +75,20 @@
                     custom:separatorColor="@color/lightBackground"
                     custom:toggleWidth="85dp"
 
-                    />-->
+                    />
+                <Spinner
+                    android:id="@+id/role"
+                    android:layout_width="240dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/round"
+                    android:ems="15"
+                    android:gravity="center"
+                    android:inputType="text"
+                    android:text="Select Role"
+                    android:textSize="18sp" />
+
 
                 <EditText
                     android:id="@+id/email"
@@ -99,22 +99,10 @@
                     android:background="@drawable/round"
                     android:ems="15"
                     android:gravity="center"
-                    android:hint="username is admin"
-                    android:inputType="text"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="240dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/round"
-                    android:ems="15"
-                    android:gravity="center"
-                    android:hint="password is admin"
-                    android:inputType="textPassword"
-                    android:textSize="18sp" />
 
 
 
@@ -123,16 +111,19 @@
                     android:id="@+id/next"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="250dp"
+                    android:layout_marginLeft="250dp"
+                    android:layout_marginTop="90dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/admin"
-                        android:layout_width="match_parent"
+                        android:id="@+id/register"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Login as Admin"
+                        android:layout_weight="10"
+                        android:gravity="end"
+                        android:text="Register"
+                        android:onClick="registerUser"
                         android:textColor="@color/darkBackground"
                         android:textSize="18sp" />
 
@@ -145,26 +136,26 @@
                         android:layout_weight="1"
                         android:src="@drawable/ic_next"
                         android:layout_marginEnd="10dp" />
+
+
+
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:gravity="center"
-                    android:text="Registered users can sign in using gmail"/>
-
-                <com.google.android.gms.common.SignInButton
-                    android:id="@+id/sign_in_button"
+                <ImageButton
+                    android:id="@+id/logout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    />
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:onClick="logoutAdmin"
+                    android:src="@drawable/ic_logout" />
 
             </LinearLayout>
 
 
+
         </androidx.cardview.widget.CardView>
+
 
     </RelativeLayout>
 

@@ -15,23 +15,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ManagementActivity">
-
-        </activity>
+        <activity android:name=".AdminRegister"></activity>
+        <activity android:name=".ManagementActivity"></activity>
         <activity
             android:name=".student_question_popup"
             android:theme="@style/AppTheme.CustomThemePreview" />
         <activity android:name=".StudentActivity" />
         <activity android:name=".TeacherActivity">
-
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="easytest-17c2e.firebaseapp.com"
                     android:scheme="https" />
-            </intent-filter>AndroidManifest.xml
+            </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
         <activity
@@ -44,10 +44,9 @@
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-                 />
+
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
